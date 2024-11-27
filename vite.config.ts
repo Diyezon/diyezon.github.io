@@ -6,11 +6,11 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-  base: './', // This ensures assets are loaded with relative paths
+  base: '',
   build: {
     rollupOptions: {
       output: {
-        manualChunks: undefined, // Disable code splitting
+        manualChunks: undefined,
       },
     },
   },
