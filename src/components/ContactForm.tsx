@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { X } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../translations';
 
 interface ContactFormProps {
   isOpen: boolean;
@@ -10,6 +12,8 @@ interface ContactFormProps {
 const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const { language } = useLanguage();
+  const t = translations[language];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,10 +23,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
 
     try {
       await emailjs.sendForm(
-        'YOUR_SERVICE_ID', // Your EmailJS service ID
-        'YOUR_TEMPLATE_ID', // Your EmailJS template ID
+        'YOUR_SERVICE_ID',
+        'YOUR_TEMPLATE_ID',
         formRef.current,
-        'YOUR_PUBLIC_KEY' // Your EmailJS public key
+        'YOUR_PUBLIC_KEY'
       );
       
       setStatus('success');
@@ -50,19 +54,19 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
         </button>
         
         <div className="p-6">
-          <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
+          <h2 className="text-2xl font-bold mb-4">{t.contact.title}</h2>
           
           {status === 'success' ? (
             <div className="text-green-600 text-center py-8">
-              <p className="text-xl">Thank you for your message!</p>
-              <p>We'll get back to you soon.</p>
+              <p className="text-xl">{t.contact.form.success}</p>
+              <p>{t.contact.form.successSubtitle}</p>
             </div>
           ) : (
             <form ref={formRef} onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Name
+                    {t.contact.form.name}
                   </label>
                   <input
                     type="text"
@@ -74,7 +78,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email
+                    {t.contact.form.email}
                   </label>
                   <input
                     type="email"
@@ -86,7 +90,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Phone
+                    {t.contact.form.phone}
                   </label>
                   <input
                     type="tel"
@@ -97,7 +101,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Message
+                    {t.contact.form.message}
                   </label>
                   <textarea
                     name="message"
@@ -122,12 +126,12 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
                   disabled={status === 'sending'}
                   className="w-full bg-primary-500 text-white py-2 rounded-md hover:bg-primary-600 transition-colors disabled:bg-primary-300"
                 >
-                  {status === 'sending' ? 'Sending...' : 'Send Message'}
+                  {status === 'sending' ? t.contact.form.sending : t.contact.form.send}
                 </button>
                 
                 {status === 'error' && (
                   <p className="text-red-500 text-center">
-                    Something went wrong. Please try again later.
+                    {t.contact.form.error}
                   </p>
                 )}
               </div>

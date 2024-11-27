@@ -3,9 +3,13 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ContactForm from './components/ContactForm';
 import { Code2, Users, BookOpen, BarChart3, CheckCircle2, MapPin } from 'lucide-react';
+import { useLanguage } from './contexts/LanguageContext';
+import { translations } from './translations';
 
 const App = () => {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false);
+  const { language } = useLanguage();
+  const t = translations[language];
 
   const handleContactClick = () => {
     setIsContactFormOpen(true);
@@ -21,16 +25,16 @@ const App = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-5xl font-bold text-gray-900 mb-6">
-                Transforming Ideas into Digital Excellence
+                {t.hero.title}
               </h1>
               <p className="text-xl text-gray-600 mb-8">
-                Diyezon Technology delivers cutting-edge software solutions, expert business consultancy, and comprehensive training programs.
+                {t.hero.subtitle}
               </p>
               <button 
                 onClick={handleContactClick}
                 className="bg-primary-500 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-primary-600 transition-colors"
               >
-                Get Started
+                {t.hero.cta}
               </button>
             </div>
             <div className="relative">
@@ -50,28 +54,24 @@ const App = () => {
       {/* Services Section */}
       <section className="py-20" id="services">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-12">Our Services</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">{t.services.title}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
                 icon: Code2,
-                title: 'Software Development',
-                description: 'Custom software solutions tailored to your business needs'
+                ...t.services.software
               },
               {
                 icon: Users,
-                title: 'Business Consultancy',
-                description: 'Expert guidance to optimize your business processes'
+                ...t.services.consultancy
               },
               {
                 icon: BookOpen,
-                title: 'Training Programs',
-                description: 'Comprehensive technical and business training courses'
+                ...t.services.training
               },
               {
                 icon: BarChart3,
-                title: 'Project Management',
-                description: 'Efficient project delivery and resource optimization'
+                ...t.services.project
               }
             ].map((service, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
@@ -89,17 +89,10 @@ const App = () => {
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">About Diyezon Technology</h2>
-              <p className="text-lg text-gray-600 mb-8">
-                With over 20 years of industry experience, Diyezon Technology has been at the forefront of digital transformation, helping businesses navigate the complex landscape of modern technology. Our commitment to excellence and innovation has made us a trusted partner for organizations seeking to enhance their digital capabilities.
-              </p>
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">{t.about.title}</h2>
+              <p className="text-lg text-gray-600 mb-8">{t.about.description}</p>
               <div className="space-y-4">
-                {[
-                  'Custom Software Development Solutions',
-                  'Expert Business Consultation Services',
-                  'Comprehensive Training Programs',
-                  'Professional Project Management',
-                ].map((item, index) => (
+                {t.about.features.map((item, index) => (
                   <div key={index} className="flex items-center gap-3">
                     <CheckCircle2 className="w-6 h-6 text-primary-500 flex-shrink-0" />
                     <span className="text-gray-700">{item}</span>
@@ -127,7 +120,7 @@ const App = () => {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Our Location</h2>
+            <h2 className="text-3xl font-bold mb-4">{t.contact.title}</h2>
             <div className="flex items-center justify-center gap-2 text-gray-600">
               <MapPin className="w-5 h-5 text-primary-500" />
               <p>Yenişehir, Aeropark, Osmanlı Bulvarı No:11 Kat 5, Kurtkoy, 34912 İstanbul, Türkiye</p>
@@ -152,15 +145,15 @@ const App = () => {
       <section className="py-20">
         <div className="container mx-auto px-6">
           <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
-            <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Business?</h2>
+            <h2 className="text-3xl font-bold mb-6">{t.cta.title}</h2>
             <p className="text-xl text-gray-600 mb-8">
-              Let's discuss how we can help you achieve your business goals.
+              {t.cta.subtitle}
             </p>
             <button 
               onClick={handleContactClick}
               className="bg-primary-500 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-primary-600 transition-colors"
             >
-              Contact Us Today
+              {t.cta.button}
             </button>
           </div>
         </div>

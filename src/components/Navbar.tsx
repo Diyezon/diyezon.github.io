@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Menu, X, Hash } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../translations';
+import LanguageSwitcher from './LanguageSwitcher';
 
 interface NavbarProps {
   onContactClick: () => void;
@@ -7,6 +10,15 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const navItems = [
+    { key: 'services', label: t.nav.services },
+    { key: 'about', label: t.nav.about },
+    { key: 'training', label: t.nav.training },
+    { key: 'contact', label: t.nav.contact }
+  ];
 
   return (
     <nav className="bg-white shadow-sm fixed w-full z-50">
@@ -22,58 +34,51 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {[
-              'Services',
-              'About',
-              'Training',
-              'Contact'
-            ].map((item) => (
+            {navItems.map((item) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
+                key={item.key}
+                href={`#${item.key}`}
                 className="text-gray-600 hover:text-primary-500 transition-colors"
               >
-                {item}
+                {item.label}
               </a>
             ))}
+            <LanguageSwitcher />
             <button 
               onClick={onContactClick}
               className="bg-primary-500 text-white px-6 py-2 rounded-lg hover:bg-primary-600 transition-colors"
             >
-              Get Started
+              {t.nav.getStarted}
             </button>
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
+          <div className="md:hidden flex items-center gap-4">
+            <LanguageSwitcher />
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden py-4">
-            {[
-              'Services',
-              'About',
-              'Training',
-              'Contact'
-            ].map((item) => (
+            {navItems.map((item) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
+                key={item.key}
+                href={`#${item.key}`}
                 className="block py-2 text-gray-600 hover:text-primary-500 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                {item}
+                {item.label}
               </a>
             ))}
             <button 
@@ -83,7 +88,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               }}
               className="w-full bg-primary-500 text-white px-6 py-2 rounded-lg hover:bg-primary-600 transition-colors mt-4"
             >
-              Get Started
+              {t.nav.getStarted}
             </button>
           </div>
         )}
