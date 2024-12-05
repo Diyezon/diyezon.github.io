@@ -1,5 +1,5 @@
 import React from 'react';
-import { Hash, Twitter, Linkedin } from 'lucide-react';
+import { Hash, Linkedin } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations';
 
@@ -73,19 +73,15 @@ const Footer = () => {
               <p className="text-gray-400">Email: info@diyezon.com</p>
               <p className="text-gray-400">Address: Yenişehir, Aeropark, Osmanlı Bulvarı No:11 Kat 5, Kurtkoy, 34912 İstanbul, Türkiye</p>
               <div className="flex gap-4">
-                {[
-                  { icon: Twitter, label: 'Twitter' },
-                  { icon: Linkedin, label: 'LinkedIn' },
-                ].map(({ icon: Icon, label }) => (
-                  <a
-                    key={label}
-                    href="#"
-                    className="hover:text-primary-400 transition-colors"
-                    aria-label={label}
-                  >
-                    <Icon className="w-6 h-6" />
-                  </a>
-                ))}
+                <a
+                  href="https://www.linkedin.com/company/diyezon/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary-400 transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="w-6 h-6" />
+                </a>
               </div>
             </div>
           </div>
