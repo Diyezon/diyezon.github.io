@@ -1,8 +1,6 @@
 import React, { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { X } from 'lucide-react';
-import { useLanguage } from '../contexts/LanguageContext';
-import { translations } from '../translations';
 
 interface ContactFormProps {
   isOpen: boolean;
@@ -12,8 +10,6 @@ interface ContactFormProps {
 const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
-  const { language } = useLanguage();
-  const t = translations[language];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,10 +18,16 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
     setStatus('sending');
 
     try {
-      await emailjs.sendForm(
+      await emailjs.send(
         'YOUR_SERVICE_ID',
         'YOUR_TEMPLATE_ID',
-        formRef.current,
+        {
+          from_name: formRef.current.from_name.value,
+          from_email: formRef.current.from_email.value,
+          message: formRef.current.message.value,
+          phone: formRef.current.phone.value,
+          to_email: 'info@diyezon.com'
+        },
         'YOUR_PUBLIC_KEY'
       );
       
@@ -54,19 +56,19 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
         </button>
         
         <div className="p-6">
-          <h2 className="text-2xl font-bold mb-4">{t.contact.title}</h2>
+          <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
           
           {status === 'success' ? (
             <div className="text-green-600 text-center py-8">
-              <p className="text-xl">{t.contact.form.success}</p>
-              <p>{t.contact.form.successSubtitle}</p>
+              <p className="text-xl">Thank you for your message!</p>
+              <p>We'll get back to you soon.</p>
             </div>
           ) : (
             <form ref={formRef} onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {t.contact.form.name}
+                    Name
                   </label>
                   <input
                     type="text"
@@ -78,7 +80,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {t.contact.form.email}
+                    Email
                   </label>
                   <input
                     type="email"
@@ -90,7 +92,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {t.contact.form.phone}
+                    Phone
                   </label>
                   <input
                     type="tel"
@@ -101,7 +103,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {t.contact.form.message}
+                    Message
                   </label>
                   <textarea
                     name="message"
@@ -110,12 +112,6 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
                   ></textarea>
                 </div>
-
-                <input 
-                  type="hidden" 
-                  name="to_email" 
-                  value="umit@diyezon.com" 
-                />
                 
                 <div className="text-sm text-gray-500 mb-4">
                   Your message will be sent to info@diyezon.com
@@ -126,12 +122,12 @@ const ContactForm: React.FC<ContactFormProps> = ({ isOpen, onClose }) => {
                   disabled={status === 'sending'}
                   className="w-full bg-primary-500 text-white py-2 rounded-md hover:bg-primary-600 transition-colors disabled:bg-primary-300"
                 >
-                  {status === 'sending' ? t.contact.form.sending : t.contact.form.send}
+                  {status === 'sending' ? 'Sending...' : 'Send Message'}
                 </button>
                 
                 {status === 'error' && (
                   <p className="text-red-500 text-center">
-                    {t.contact.form.error}
+                    Something went wrong. Please try again later.
                   </p>
                 )}
               </div>

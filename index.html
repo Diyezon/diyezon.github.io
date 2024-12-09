@@ -1,13 +1,152 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Diyezon Technology Ltd. - Software Development & Business Consultancy</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="./src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diyezon Technology</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">#</span>
+                <span class="logo-text">Diyezon Technology</span>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#services" data-translate="nav.services">Services</a>
+                <a href="#about" data-translate="nav.about">About</a>
+                <a href="#contact" data-translate="nav.contact">Contact</a>
+                <button class="btn-primary" onclick="openContactForm()" data-translate="nav.getStarted">Get Started</button>
+                <div class="language-switcher">
+                    <button onclick="switchLanguage('en')" class="lang-btn">EN</button>
+                    <button onclick="switchLanguage('tr')" class="lang-btn">TR</button>
+                </div>
+            </div>
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Transforming Ideas into Digital Excellence</h1>
+            <p>Diyezon Technology delivers cutting-edge software solutions, expert business consultancy, and comprehensive training programs.</p>
+            <button class="btn-primary" onclick="openContactForm()" data-translate="nav.getStarted">Get Started</button>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon">💻</div>
+                    <h3>Software Development</h3>
+                    <p>Custom software solutions tailored to your business needs</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">📊</div>
+                    <h3>Business Consultancy</h3>
+                    <p>Expert guidance to optimize your business processes</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">📚</div>
+                    <h3>Training Programs</h3>
+                    <p>Comprehensive technical and business training courses</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">📈</div>
+                    <h3>Project Management</h3>
+                    <p>Efficient project delivery and resource optimization</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Diyezon Technology</h2>
+                    <p>With over 20 years of industry experience, Diyezon Technology has been at the forefront of digital transformation, helping businesses navigate the complex landscape of modern technology.</p>
+                    <ul class="features-list">
+                        <li>✓ Custom Software Development Solutions</li>
+                        <li>✓ Expert Business Consultation Services</li>
+                        <li>✓ Comprehensive Training Programs</li>
+                        <li>✓ Professional Project Management</li>
+                    </ul>
+                </div>
+                <div class="about-images">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80" alt="Team meeting">
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80" alt="Modern office">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <div class="location">
+                <span class="icon">📍</span>
+                <p>Yenişehir, Aeropark, Osmanlı Bulvarı No:11 Kat 5, Kurtkoy, 34912 İstanbul, Türkiye</p>
+            </div>
+            <div class="map">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3015.0076366284424!2d29.317436776526766!3d40.905391571533566!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cad8f7ee6f56e7%3A0x33c7c2bd2b372927!2sAeropark!5e0!3m2!1sen!2str!4v1709836271037!5m2!1sen!2str"
+                    width="100%"
+                    height="450"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <div id="contactForm" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeContactForm()">&times;</span>
+            <h2>Contact Us</h2>
+            <form id="contactFormElement" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>Email: info@diyezon.com</p>
+                <p>Yenişehir, Aeropark, Osmanlı Bulvarı No:11 Kat 5, Kurtkoy, 34912 İstanbul, Türkiye</p>
+                <a href="https://www.linkedin.com/company/diyezon/" target="_blank" rel="noopener noreferrer" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="24" height="24">
+                </a>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Diyezon Technology Ltd. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+</body>
 </html>
